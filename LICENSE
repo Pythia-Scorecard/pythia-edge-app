@@ -1,0 +1,208 @@
+PYTHIA EDGE APPLICATION SOFTWARE LICENSE AGREEMENT
+
+Copyright (c) 2026 Pythia LLC. All Rights Reserved.
+
+IMPORTANT — READ CAREFULLY BEFORE ACCESSING, DOWNLOADING, INSTALLING, OR
+USING THIS SOFTWARE. BY ACCESSING OR USING THE SOFTWARE, YOU ACKNOWLEDGE
+THAT YOU HAVE READ THIS AGREEMENT, UNDERSTAND IT, AND AGREE TO BE BOUND BY
+ITS TERMS. IF YOU DO NOT AGREE, DO NOT ACCESS, DOWNLOAD, INSTALL, COPY, OR
+USE THE SOFTWARE.
+
+This Pythia Edge Application Software License Agreement ("Agreement") is a
+legal agreement between you ("Licensee," "you," or "your") and Pythia LLC
+("Pythia," "we," "us," or "our") governing the Pythia Edge Application
+software and associated documentation (collectively, the "Software").
+
+The source code for the Software may be made publicly available in this
+repository for transparency and reference purposes only. Public availability
+of source code does not grant any license or other right to use, copy,
+modify, distribute, or operate the Software except as expressly authorized
+under a valid, written license agreement issued by Pythia.
+
+1.  DEFINITIONS
+
+    1.1 "Authorized Device" means a physical edge device (including, without
+    limitation, a Raspberry Pi or other hardware platform) that has been
+    provisioned, supplied, or expressly authorized by Pythia for use with
+    the Software.
+
+    1.2 "Authorized Deployment" means installation, deployment, or operation
+    of the Software on an Authorized Device solely through Pythia's
+    official provisioning, management, or auto-update software, tools, or
+    services designated by Pythia from time to time.
+
+    1.3 "License Key" means a valid license credential, entitlement, token,
+    or activation record issued by Pythia that is required for the
+    Software to operate in production.
+
+    1.4 "Pythia Platform" means Pythia's proprietary cloud services,
+    management console, scorecard platform, APIs, and related software
+    with which the Software is designed to interoperate.
+
+2.  LICENSE REQUIREMENT
+
+    Use of the Software requires a separate, valid license obtained directly
+    from Pythia. The Software is designed to require a valid License Key and
+    will not function for its intended purpose without active authorization
+    from Pythia.
+
+    To obtain a license, contact:
+
+        Email:   nick@pythiascorecard.com
+        Website: https://www.pythiascorecard.com
+
+    No license is granted by mere access to, cloning of, or inspection of
+    this repository.
+
+3.  GRANT OF LIMITED LICENSE
+
+    Subject to your compliance with this Agreement and a valid license
+    agreement with Pythia, Pythia grants you a limited, non-exclusive,
+    non-transferable, non-sublicensable, revocable license to use the
+    Software solely for Authorized Deployment on Authorized Devices in
+    connection with the Pythia Platform.
+
+    All rights not expressly granted are reserved by Pythia and its licensors.
+
+4.  PERMITTED USE
+
+    You may use the Software only to the extent expressly authorized by
+    Pythia and only:
+
+    (a) on Authorized Devices;
+    (b) through Pythia's official auto-download, provisioning, installation,
+    or update mechanisms;
+    (c) with a valid License Key issued by Pythia; and
+    (d) in accordance with any applicable written order, subscription,
+    entitlement, or master services agreement between you and Pythia.
+
+5.  RESTRICTIONS
+
+    Except as expressly permitted in writing by Pythia, you shall not, and
+    shall not permit any third party to:
+
+    (a) use, install, deploy, copy, or operate the Software on any device
+    that is not an Authorized Device;
+    (b) use the Software independently of, or outside the scope of, the
+    Pythia Platform or Pythia's authorized deployment tools;
+    (c) bypass, disable, circumvent, or interfere with any License Key,
+    activation, authentication, metering, or technical protection
+    mechanism;
+    (d) modify, adapt, translate, or create derivative works of the Software,
+    except to the limited extent such restriction is prohibited by
+    applicable law;
+    (e) reverse engineer, decompile, disassemble, or otherwise attempt to
+    derive source code, underlying ideas, algorithms, or structure of
+    the Software, except to the limited extent expressly permitted by
+    applicable law notwithstanding this restriction;
+    (f) distribute, publish, sublicense, sell, rent, lease, loan, or
+    otherwise transfer the Software or any copy thereof to any third
+    party;
+    (g) remove, alter, or obscure any proprietary notices, labels, or marks
+    on or in the Software;
+    (h) use the Software to develop, offer, or support a competing product
+    or service; or
+    (i) use the Software in violation of any applicable law or regulation.
+
+6.  OWNERSHIP
+
+    The Software is licensed, not sold. Pythia and its licensors retain all
+    right, title, and interest in and to the Software, including all
+    intellectual property rights therein. No ownership interest is transferred
+    to you under this Agreement.
+
+7.  THIRD-PARTY COMPONENTS
+
+    The Software may include or depend upon third-party open-source or
+    commercial components that are subject to their own license terms. Nothing
+    in this Agreement is intended to limit your rights under, or impose
+    restrictions inconsistent with, those third-party licenses.
+
+8.  CONFIDENTIALITY AND TRADE SECRETS
+
+    Although source code may be publicly visible, the Software may contain
+    proprietary methods, configurations, and business logic belonging to
+    Pythia. You agree not to misuse publicly available materials in a manner
+    that violates Pythia's intellectual property rights or applicable law.
+
+9.  UPDATES AND SUPPORT
+
+    Pythia may provide updates, patches, or new versions at its sole
+    discretion. Support, maintenance, and entitlement to updates are
+    available only to licensees under an active agreement with Pythia and may
+    be subject to separate terms.
+
+10. DISCLAIMER OF WARRANTIES
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE." TO THE MAXIMUM
+    EXTENT PERMITTED BY APPLICABLE LAW, PYTHIA DISCLAIMS ALL WARRANTIES,
+    WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING WITHOUT
+    LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+    PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, AND ANY WARRANTIES ARISING
+    OUT OF COURSE OF DEALING OR USAGE OF TRADE.
+
+    PYTHIA DOES NOT WARRANT THAT THE SOFTWARE WILL BE UNINTERRUPTED,
+    ERROR-FREE, SECURE, OR MEET YOUR REQUIREMENTS.
+
+11. LIMITATION OF LIABILITY
+
+    TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
+    PYTHIA OR ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR
+    LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL,
+    EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, REVENUE,
+    DATA, GOODWILL, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO
+    THIS AGREEMENT OR THE SOFTWARE, WHETHER BASED ON CONTRACT, TORT,
+    NEGLIGENCE, STRICT LIABILITY, OR ANY OTHER THEORY, EVEN IF PYTHIA HAS
+    BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+    TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PYTHIA'S TOTAL
+    AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT OR THE
+    SOFTWARE SHALL NOT EXCEED THE GREATER OF (A) THE AMOUNTS PAID BY YOU TO
+    PYTHIA FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM,
+    OR (B) ONE HUNDRED U.S. DOLLARS (US $100).
+
+    SOME JURISDICTIONS DO NOT ALLOW CERTAIN LIMITATIONS OF LIABILITY OR
+    WARRANTY DISCLAIMERS; IN SUCH CASES, THE ABOVE LIMITATIONS APPLY TO THE
+    FULLEST EXTENT PERMITTED BY LAW.
+
+12. TERMINATION
+
+    This Agreement is effective until terminated. Pythia may terminate this
+    Agreement immediately upon notice if you breach any term herein or if
+    your license with Pythia expires or is revoked. Upon termination, you
+    must cease all use of the Software and destroy all copies in your
+    possession or control. Sections intended by their nature to survive
+    termination shall survive, including ownership, restrictions,
+    disclaimers, limitations of liability, and governing law.
+
+13. EXPORT COMPLIANCE
+
+    You agree to comply with all applicable export control, sanctions, and
+    import laws and regulations in connection with your use of the Software.
+
+14. GOVERNING LAW
+
+    This Agreement shall be governed by and construed in accordance with the
+    laws applicable in the jurisdiction designated in your written license
+    agreement with Pythia, or, if none is designated, the laws of the State
+    of Delaware, United States of America, excluding its conflict-of-law
+    rules. The parties consent to the exclusive jurisdiction and venue of
+    the courts located in Delaware for disputes arising under this Agreement,
+    except where prohibited by applicable law.
+
+15. ENTIRE AGREEMENT
+
+    This Agreement constitutes the entire agreement between you and Pythia
+    regarding the Software to the extent not superseded by a separate signed
+    license, order form, or master agreement with Pythia. Pythia may update
+    this Agreement by posting a revised version in this repository; continued
+    use after such posting may constitute acceptance of the revised terms
+    where permitted by law.
+
+16. CONTACT
+
+    For licensing, support, and authorized deployment inquiries:
+
+        Pythia LLC
+        Email:   nick@pythiascorecard.com
+        Website: https://www.pythiascorecard.com

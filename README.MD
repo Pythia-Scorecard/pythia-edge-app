@@ -2,6 +2,8 @@
 
 This project is a Node.js-based voice recording and processing system designed to record audio, convert raw audio files to MP3, and handle interrupted recordings.
 
+> **Proprietary software.** Copyright © 2026 Pythia LLC. This repository is public for reference only. Use, deployment, and operation require a valid license from Pythia. See [License](#license).
+
 ## Features
 
 - 🎙️ **Continuous Voice Recording**: Automatically records audio in `.raw` format at defined intervals.
@@ -200,4 +202,26 @@ Check if `logs/app.log` exists and is being written to correctly.
 
 ## License
 
-MIT License © 2025 [Techrafter LTD](https://www.techrafter.com/)
+Copyright © 2026 Pythia LLC. All Rights Reserved.
+
+This repository is **publicly available for reference only**. Source code
+visibility does **not** grant permission to use, deploy, copy, modify, or
+distribute the software.
+
+The Pythia Edge Application is **proprietary software** and may only be
+installed and operated on **Pythia-authorized edge devices** (including
+Raspberry Pi and other hardware supplied or approved by Pythia) through
+**Pythia's official provisioning and auto-update software**. Any other use
+is prohibited without prior written authorization from Pythia.
+
+A **valid license from Pythia is required** for production use. The
+application is designed to require an active license key and will not
+operate for its intended purpose without authorization from Pythia.
+
+**Obtain a license:**
+
+- Email: [nick@pythiascorecard.com](mailto:nick@pythiascorecard.com)
+- Website: [pythiascorecard.com](https://www.pythiascorecard.com)
+
+See [LICENSE](./LICENSE) for the full Pythia Edge Application Software
+License Agreement.

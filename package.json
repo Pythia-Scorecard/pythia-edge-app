@@ -9,8 +9,8 @@
     "prettier": "prettier --write src/**/*.ts"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Pythia LLC <nick@pythiascorecard.com>",
+  "license": "SEE LICENSE IN LICENSE",
   "description": "",
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
