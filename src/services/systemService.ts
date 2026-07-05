@@ -41,7 +41,11 @@ let isCheckingSystemMic = {
 };
 
 let cpuReportedAT: number | null = null;
-const CPU_THRESHOLD = 70;
+const CPU_THRESHOLD = 100;
+
+const OFFICIAL_GIT_REPO_URL =
+  "https://github.com/Pythia-Scorecard/pythia-edge-app.git";
+const OFFICIAL_GIT_BRANCH = "main";
 
 let lastCycleTime: number | null = null;
 
@@ -240,22 +244,76 @@ export class SystemService {
     }
   }
 
+  static normalizeGitRemoteUrl(url: string): string {
+    return url
+      .trim()
+      .replace(/^git@github\.com:/i, "https://github.com/")
+      .replace(/\.git$/i, "")
+      .replace(/\/+$/, "")
+      .toLowerCase();
+  }
+
+  static async ensureCanonicalGitRemote(): Promise<boolean> {
+    let currentUrl: string;
+
+    try {
+      const remoteUrl = await git.remote(["get-url", "origin"]);
+      if (!remoteUrl || typeof remoteUrl !== "string") {
+        logger.warn(
+          "Git origin remote URL is missing; skipping remote migration check.",
+        );
+        return false;
+      }
+      currentUrl = remoteUrl;
+    } catch {
+      logger.warn("No git origin remote found; skipping remote migration check.");
+      return false;
+    }
+
+    const normalizedCurrent = this.normalizeGitRemoteUrl(currentUrl);
+    const normalizedOfficial = this.normalizeGitRemoteUrl(
+      OFFICIAL_GIT_REPO_URL,
+    );
+
+    if (normalizedCurrent === normalizedOfficial) {
+      return false;
+    }
+
+    logger.info(
+      `Migrating git remote from legacy repository (${currentUrl}) to official Pythia repository (${OFFICIAL_GIT_REPO_URL})...`,
+    );
+
+    await git.remote(["set-url", "origin", OFFICIAL_GIT_REPO_URL]);
+    logger.info("Git remote updated to official Pythia repository.");
+
+    return true;
+  }
+
   static async checkForUpdates(): Promise<{ code: number; message: string }> {
     try {
       logger.info("🔍 Checking for updates...");
 
-      // Fetch latest changes
+      const migratedRemote = await this.ensureCanonicalGitRemote();
+
       await git.fetch();
 
-      // Get local and remote commit hashes
       const localCommit = await git.revparse(["HEAD"]);
-      const remoteCommit = await git.revparse(["origin/main"]);
+      const remoteCommit = await git.revparse([
+        `origin/${OFFICIAL_GIT_BRANCH}`,
+      ]);
 
-      if (localCommit !== remoteCommit) {
-        logger.info("🚀 New updates found! Pulling latest changes...");
+      const hasUpdates = migratedRemote || localCommit !== remoteCommit;
 
-        // Pull latest code
-        await git.pull("origin", "main");
+      if (hasUpdates) {
+        if (migratedRemote) {
+          logger.info(
+            "🔄 Syncing local repository with official Pythia repository...",
+          );
+          await git.reset(["--hard", `origin/${OFFICIAL_GIT_BRANCH}`]);
+        } else {
+          logger.info("🚀 New updates found! Pulling latest changes...");
+          await git.pull("origin", OFFICIAL_GIT_BRANCH);
+        }
 
         // Check if package.json changed (to reinstall dependencies)
         // const changedFiles = await git.diffSummary(["HEAD~1"]);
