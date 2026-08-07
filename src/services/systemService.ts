@@ -210,7 +210,7 @@ export class SystemService {
         });
       });
 
-      if (cpuUsagePercentage > CPU_THRESHOLD) {
+      if (cpuUsagePercentage >= CPU_THRESHOLD) {
         await NotificationService.sendHeartBeatToServer(
           NotificationEvent.DEVICE_CPU_ALARM,
           [
@@ -266,7 +266,9 @@ export class SystemService {
       }
       currentUrl = remoteUrl;
     } catch {
-      logger.warn("No git origin remote found; skipping remote migration check.");
+      logger.warn(
+        "No git origin remote found; skipping remote migration check.",
+      );
       return false;
     }
 
