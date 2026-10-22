@@ -1,0 +1,26 @@
+name: Node security checks
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22.23.4', '24.22.1']
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      BACKEND_URL: http://127.0.0.1:59999
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm run test:runtime
+      - run: npm test --if-present
+      - run: npm run build

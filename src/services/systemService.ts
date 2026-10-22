@@ -2,8 +2,8 @@ import os, { homedir } from "os";
 import osu from "os-utils";
 import si from "systeminformation";
 import dotenv from "dotenv";
-import simpleGit from "simple-git";
-import { exec, spawn } from "child_process";
+import { simpleGit } from "simple-git";
+import { exec, execFile, spawn } from "child_process";
 import logger from "../utils/winston/logger";
 import util from "util";
 import { NotificationEvent, NotificationService } from "./notificationService";
@@ -24,6 +24,7 @@ import fs from "fs/promises";
 
 const git = simpleGit();
 const execPromise = util.promisify(exec);
+const execFilePromise = util.promisify(execFile);
 
 dotenv.config();
 
@@ -295,6 +296,19 @@ export class SystemService {
     try {
       logger.info("🔍 Checking for updates...");
 
+      // Check the actual application executable before touching Git, dependencies,
+      // recordings or PM2. Runtime migration is a supervised operation.
+      await execFilePromise(process.execPath, [
+        join(process.cwd(), "scripts/check-node.cjs"),
+      ]);
+      const shellNode = await execFilePromise("node", ["--version"]);
+      if (shellNode.stdout.trim() !== process.version) {
+        throw new Error("Application and updater PATH use different Node versions");
+      }
+      await execFilePromise(process.execPath, [
+        join(process.cwd(), "scripts/check-pm2.cjs"), "ai-voice-app",
+      ]);
+
       const migratedRemote = await this.ensureCanonicalGitRemote();
 
       await git.fetch();
@@ -326,7 +340,7 @@ export class SystemService {
         // if (needsNpmInstall) {
         logger.info("📦 Installing dependencies...");
         try {
-          const { stdout } = await execPromise("npm install");
+          const { stdout } = await execPromise("npm ci");
           logger.info(`✅ Dependencies updated:\n${stdout}`);
         } catch (err) {
           logger.error(`❌ Failed to install dependencies: ${err}`);

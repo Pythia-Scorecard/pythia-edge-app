@@ -21,7 +21,7 @@ This project is a Node.js-based voice recording and processing system designed t
 
 Ensure you have the following installed:
 
-- Node.js (v16+ recommended)
+- Node.js 22.23.4+ (22.x) or 24.22.1+ (24.x). See [runtime and rollout requirements](docs/node-security-2026-10.md). Use 22.x for a compatible 32-bit ARM device.
 - FFmpeg
 - A microphone connected to the system
 
