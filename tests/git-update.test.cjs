@@ -8,7 +8,8 @@ const vm = require('node:vm');
 const ts = require('typescript');
 const { simpleGit } = require('simple-git');
 
-test('patched Git library preserves fetch, commit comparison and automatic application update', async () => {
+for (const hold of [undefined, '0']) {
+test(`automatic application update preserves fetch/install/build/restart with hold ${hold ?? 'unset'}`, async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pythia-git-test-'));
   const source = path.join(dir, 'source'); const device = path.join(dir, 'device');
   fs.mkdirSync(source);
@@ -33,7 +34,8 @@ test('patched Git library preserves fetch, commit comparison and automatic appli
     const js = ts.transpileModule('class Subject {' + method.getText(parsed) + '}; Subject;', {compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
     const commands = []; let restarted = 0;
     const subject = vm.runInNewContext(js,{
-      git:local, OFFICIAL_GIT_BRANCH:'main', process, join:path.join,
+      git:local, OFFICIAL_GIT_BRANCH:'main',
+      process:{env:{PYTHIA_UPDATE_HOLD:hold},execPath:process.execPath,version:process.version,cwd:process.cwd}, join:path.join,
       execFilePromise:async(command,args)=>({stdout:args[0] === '--version' ? process.version : ''}),
       execPromise:async command=>{commands.push(command); return {stdout:'fixture build/install'};},
       logger:{info(){},error(){}}
@@ -51,4 +53,5 @@ test('patched Git library preserves fetch, commit comparison and automatic appli
     assert.equal(await local.revparse(['HEAD']),await origin.revparse(['HEAD']));
   } finally { fs.rmSync(dir,{recursive:true,force:true}); }
 });
+}
 

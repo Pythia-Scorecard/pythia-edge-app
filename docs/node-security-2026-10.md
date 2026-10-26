@@ -62,6 +62,18 @@ A merge can be a deployment. The backend's main-push workflow deploys to EC2; th
 
 Do not merge edge main to run a canary. Stage a selected commit on the test/canary device with its automatic update path held there under the approved rollout, leaving fleet main unchanged. Verify the fleet's update behavior before any later merge.
 
+### Holding updates on a selected device
+
+Set `PYTHIA_UPDATE_HOLD=1` in the selected application's service/PM2 environment before starting the candidate. All calls to `SystemService.checkForUpdates()` then return `200` with `Application updates are held on this device.` before runtime commands, Git, installation, building or restart. This covers startup after interrupted-file recovery, the daily cron callback and `/update-app`. Recording, upload, reconnect and Python helpers are unchanged. This is an application-update hold, not a hold on separate OS maintenance commands.
+
+An unset value or exact `0` retains the existing guarded update behavior. Any other value, including an empty string or a misspelling, holds updates and returns `503` without printing the supplied value. Use exact `1` and `0`; do not use `true` or `false`.
+
+The environment belongs to the running process. A shell export alone does not change PM2's saved environment. Persist the approved value in the service launch configuration and the saved PM2 application configuration, restart only the selected app using the approved procedure, and verify the app's reported hold through `/update-app`. Recheck after service restart and before enabling automatic updates again. Keep the setting outside the Git checkout so an application update cannot overwrite the operator's decision.
+
+This control exists only in the new candidate. An old device cannot be held by setting a variable its code never reads. Keep fleet `main` unchanged while installing selected commits under supervision. Do not merge while unidentified/offline devices could return and fetch an incompatible update. The hold is not remote authorization, a fleet selection service or a mechanism for installing Node.
+
+Before removing a hold, confirm the intended upstream commit, patched application/PM2/startup runtimes, backup and approval. An unheld update continues to follow the canonical `main`; do not point a customer canary at an unreviewed branch or a test Git fixture.
+
 ## Stop conditions and rollback
 
 Stop on any auth/permission regression, lost or duplicate audio/job, unexplained queue growth, failed reconnect, restart loop, missing Python/CUDA/USB dependency, runtime mismatch, or failed startup/reboot. Also stop if 5xx exceeds 1% for five minutes or processing latency exceeds twice the comparable baseline for 15 minutes. Adjust numerical thresholds only with a recorded baseline and owner approval.

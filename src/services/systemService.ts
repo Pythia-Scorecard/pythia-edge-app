@@ -294,6 +294,18 @@ export class SystemService {
 
   static async checkForUpdates(): Promise<{ code: number; message: string }> {
     try {
+      // Keep a selected device on its approved release, including update calls
+      // made during startup, recovery, cron and the HTTP update endpoint.
+      const updateHold = process.env.PYTHIA_UPDATE_HOLD;
+      if (updateHold !== undefined && updateHold !== "0") {
+        const validHold = updateHold === "1";
+        const message = validHold
+          ? "Application updates are held on this device."
+          : "Application updates are held: PYTHIA_UPDATE_HOLD must be 0 or 1.";
+        logger.info(message);
+        return { code: validHold ? 200 : 503, message };
+      }
+
       logger.info("🔍 Checking for updates...");
 
       // Check the actual application executable before touching Git, dependencies,

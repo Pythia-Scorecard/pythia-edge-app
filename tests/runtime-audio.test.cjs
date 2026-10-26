@@ -59,7 +59,7 @@ test('automatic update refuses a rejected runtime before changing Git or restart
   let touched = false;
   const subject = vm.runInNewContext(js, {
     execFilePromise: async () => { throw new Error('Node is unpatched'); },
-    process, join:path.join, logger:{info(){},error(){}}
+    process:{env:{},execPath:process.execPath,cwd:process.cwd}, join:path.join, logger:{info(){},error(){}}
   });
   subject.ensureCanonicalGitRemote = async () => { touched = true; };
   const result = await subject.checkForUpdates();
