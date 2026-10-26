@@ -2,8 +2,8 @@ import os, { homedir } from "os";
 import osu from "os-utils";
 import si from "systeminformation";
 import dotenv from "dotenv";
-import simpleGit from "simple-git";
-import { exec, spawn } from "child_process";
+import { simpleGit } from "simple-git";
+import { exec, execFile, spawn } from "child_process";
 import logger from "../utils/winston/logger";
 import util from "util";
 import { NotificationEvent, NotificationService } from "./notificationService";
@@ -24,6 +24,7 @@ import fs from "fs/promises";
 
 const git = simpleGit();
 const execPromise = util.promisify(exec);
+const execFilePromise = util.promisify(execFile);
 
 dotenv.config();
 
@@ -293,7 +294,32 @@ export class SystemService {
 
   static async checkForUpdates(): Promise<{ code: number; message: string }> {
     try {
+      // Keep a selected device on its approved release, including update calls
+      // made during startup, recovery, cron and the HTTP update endpoint.
+      const updateHold = process.env.PYTHIA_UPDATE_HOLD;
+      if (updateHold !== undefined && updateHold !== "0") {
+        const validHold = updateHold === "1";
+        const message = validHold
+          ? "Application updates are held on this device."
+          : "Application updates are held: PYTHIA_UPDATE_HOLD must be 0 or 1.";
+        logger.info(message);
+        return { code: validHold ? 200 : 503, message };
+      }
+
       logger.info("🔍 Checking for updates...");
+
+      // Check the actual application executable before touching Git, dependencies,
+      // recordings or PM2. Runtime migration is a supervised operation.
+      await execFilePromise(process.execPath, [
+        join(process.cwd(), "scripts/check-node.cjs"),
+      ]);
+      const shellNode = await execFilePromise("node", ["--version"]);
+      if (shellNode.stdout.trim() !== process.version) {
+        throw new Error("Application and updater PATH use different Node versions");
+      }
+      await execFilePromise(process.execPath, [
+        join(process.cwd(), "scripts/check-pm2.cjs"), "ai-voice-app",
+      ]);
 
       const migratedRemote = await this.ensureCanonicalGitRemote();
 
@@ -326,7 +352,7 @@ export class SystemService {
         // if (needsNpmInstall) {
         logger.info("📦 Installing dependencies...");
         try {
-          const { stdout } = await execPromise("npm install");
+          const { stdout } = await execPromise("npm ci");
           logger.info(`✅ Dependencies updated:\n${stdout}`);
         } catch (err) {
           logger.error(`❌ Failed to install dependencies: ${err}`);
